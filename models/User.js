@@ -1,5 +1,5 @@
 const pls = require('passport-local-sequelize')
-const { DataTypes } = require('sequelize')
+const { Model ,DataTypes } = require('sequelize')
 const sequelize = require('../db')
 
 // class User extends Model { }

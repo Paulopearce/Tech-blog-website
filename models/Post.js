@@ -11,7 +11,8 @@ class Post extends Model { }
 Post.init({
   //give title and body
   title: DataTypes.STRING,
-  body: DataTypes.STRING
+  body: DataTypes.STRING,
+  date: DataTypes.STRING
   //Pass in sequelize connection and modelName
 }, { sequelize, modelName: 'post' })
 //Export Post

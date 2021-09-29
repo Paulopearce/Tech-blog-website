@@ -1,11 +1,17 @@
-
+if(localStorage.getItem('token') === null){
+  document.getElementById('logOut').textContent = "Log in"
+}
 
 document.getElementById('goHome').addEventListener('click', () => {
   window.location = '/'
 })
 
 document.getElementById('goProfile').addEventListener('click', () => {
-  window.location = '/profile.html'
+  if(localStorage.getItem("token") === null){
+    alert('sign up or sign in')
+  } else{
+    window.location = '/profile.html'
+  }
 })
 
 document.getElementById('logOut').addEventListener('click', () =>{
@@ -38,3 +44,8 @@ axios.get('/api/posts', {
     console.log(err)
     window.location = '/auth.html'
   })
+
+setTimeout(function(){
+  localStorage.removeItem('token')
+  window.location ='/auth.html'
+}, 1200000);

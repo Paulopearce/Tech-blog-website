@@ -1,3 +1,5 @@
+
+
 document.getElementById('goHome').addEventListener('click', () => {
   window.location = '/'
 })
@@ -13,17 +15,16 @@ document.getElementById('logOut').addEventListener('click', () =>{
 
 document.getElementById('createPost').addEventListener('click', event => {
   event.preventDefault()
-
   axios.post('/api/posts', {
     title: document.getElementById('title').value,
-    body: document.getElementById('body').value
+    body: document.getElementById('body').value,
   }, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }
   })
 
-    .then(({ data: { id, title, body, u: { username } } }) => {
+    .then(({ data: { id, title, body, date, u: { username } } }) => {
       let d = new Date()
       const postElem = document.createElement('li')
       postElem.className = 'd-flex justify-content-between align-tems-start mb-2 listItem'
@@ -34,7 +35,7 @@ document.getElementById('createPost').addEventListener('click', event => {
         </div>
         <span class="badge bg-primary rounded-pill">${username}</span>
         <span data-id="${id}" class="deletePost badge bg-danger rounded-pill ">x</span>
-        <span class=" badge bg-secondary rounded-pill ">${d.getMonth()+1}-${d.getDate()}</span>
+        <span class=" badge bg-secondary rounded-pill ">${date}</span>
       `
       document.getElementById('posts').append(postElem)
     })
@@ -59,8 +60,7 @@ axios.get('/api/users/posts', {
   }
 })
   .then(({ data: { username, posts} }) => {
-    posts.forEach(({ id, title, body }) => {
-      let d = new Date()
+    posts.forEach(({ id, title, body, date }) => {
       const postElem = document.createElement('li')
       postElem.className = 'd-flex justify-content-between align-tems-start mb-2 listItem'
       postElem.innerHTML = `
@@ -71,10 +71,14 @@ axios.get('/api/users/posts', {
         </div>
         <span class="badge bg-primary rounded-pill infoPill">${username}</span>
         <span data-id="${id}" class="deletePost badge bg-danger rounded-pill ">x</span>
-        <span class=" badge bg-secondary rounded-pill ">${d.getMonth()+1}-${d.getDate()}</span>
+        <span class=" badge bg-secondary rounded-pill ">${date}</span>
       `
       document.getElementById('posts').append(postElem)
     })
   })
   .catch(err => console.error(err))
 
+setTimeout(function(){
+  localStorage.removeItem('token')
+  window.location ='/auth.html'
+}, 1200000);
