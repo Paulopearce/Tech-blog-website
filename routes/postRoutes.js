@@ -39,4 +39,10 @@ router.delete('/posts/:id', (req,res) => Post.destroy({where: { id: req.params.i
   .then(() => res.sendStatus(200))
   .catch(err => console.log(err)))
 //Export router
+
+router.get('/posts/:id', (req,res) => { 
+  Post.findOne({ where: { id: req.params.id }, include: 'u' })
+  .then((post) => res.json(post))
+  .catch(err => console.log(err))
+})
 module.exports = router

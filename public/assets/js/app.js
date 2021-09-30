@@ -49,3 +49,5 @@ setTimeout(function(){
   localStorage.removeItem('token')
   window.location ='/auth.html'
 }, 1200000);
+
+
